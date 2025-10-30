@@ -1,44 +1,33 @@
 import random
 import math
-# Taking Inputs
-lower = int(input("Enter Lower bound:- "))
 
-# Taking Inputs
-upper = int(input("Enter Upper bound:- "))
+# Taking inputs for lower and upper bounds
+lower = int(input("Enter the lower bound: "))
+upper = int(input("Enter the upper bound: "))
 
-# generating random number between
-# the lower and upper
-x = random.randint(lower, upper)
-print("\n\tYou've only ",
-	round(math.log(upper - lower + 1, 2)),
-	" chances to guess the integer!\n")
+# Generate a random number between the bounds
+target_number = random.randint(lower, upper)
 
-# Initializing the number of guesses.
-count = 0
+# Calculate the maximum number of guesses allowed
+max_guesses = round(math.log2(upper - lower + 1))
+print(f"\nYou have {max_guesses} chances to guess the integer!\n")
 
-# for calculation of minimum number of
-# guesses depends upon range
-while count < math.log(upper - lower + 1, 2):
-	count += 1
+# Initialize the guess counter
+guess_count = 0
 
-	# taking guessing number as input
-	guess = int(input("Guess a number:- "))
+# Loop for taking guesses
+while guess_count < max_guesses:
+    guess_count += 1
+    guess = int(input("Guess a number: "))
 
-	# Condition testing
-	if x == guess:
-		print("Congratulations you did it in ",
-			count, " try")
-		# Once guessed, loop will break
-		break
-	elif x > guess:
-		print("You guessed too small!")
-	elif x < guess:
-		print("You Guessed too high!")
+    if guess == target_number:
+        print(f"Congratulations! You guessed it in {guess_count} tries.")
+        break
+    elif guess < target_number:
+        print("Your guess is too low!")
+    else:  # guess > target_number
+        print("Your guess is too high!")
 
-# If Guessing is more than required guesses,
-# shows this output.
-if count >= math.log(upper - lower + 1, 2):
-	print("\nThe number is %d" % x)
-	print("\tBetter Luck Next time!")
-
-# Better to use This source Code on pycharm!
+# If the player used all guesses without success
+if guess_count >= max_guesses and guess != target_number:
+    print(f"\nSorry! The number was {target_number}. Better luck next time!")

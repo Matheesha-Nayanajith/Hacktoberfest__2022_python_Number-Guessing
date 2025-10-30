@@ -1,41 +1,35 @@
 import random
 import math
-# Taking Inputs
-lower = int(input("Enter Lower bound:- "))
 
+# Taking inputs from the user
+lower = int(input("Enter the lower bound: "))
+upper = int(input("Enter the upper bound: "))
 
-upper = int(input("Enter Upper bound:- "))
-
-
-
+# Generating a random number
 x = random.randint(lower, upper)
-print("\n\tYou've only ",
-	round(math.log(upper - lower + 1, 2)),
-	" chances to guess the integer!\n")
 
+# Maximum number of chances based on binary search logic
+max_attempts = round(math.log(upper - lower + 1, 2))
+print(f"\nYou have only {max_attempts} chances to guess the integer!\n")
 
+# Initialize attempt counter
 count = 0
 
+while count < max_attempts:
+    count += 1
+    # Taking the user's guess
+    guess = int(input("Guess a number: "))
 
-while count < math.log(upper - lower + 1, 2):
-	count += 1
+    # Checking the guess
+    if guess == x:
+        print(f"Congratulations! You guessed it in {count} {'try' if count == 1 else 'tries'}.")
+        break
+    elif guess < x:
+        print("Too low!")
+    else:
+        print("Too high!")
 
-	# taking guessing number as input
-	guess = int(input("Guess a number:- "))
-
-	# Condition testing
-	if x == guess:
-		print("Congratulations you did it in ",
-			count, " try")
-		# Once guessed, loop will break
-		break
-	elif x > guess:
-		print("You guessed too small!")
-	elif x < guess:
-		print("You Guessed too high!")
-
-
-if count >= math.log(upper - lower + 1, 2):
-	print("\nThe number is %d" % x)
-	print("\tBetter Luck Next time!")
-
+# If all attempts are used
+if count >= max_attempts and guess != x:
+    print(f"\nThe number was {x}.")
+    print("Better luck next time!")
